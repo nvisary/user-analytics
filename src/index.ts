@@ -1,7 +1,11 @@
-import "dotenv/config";
-import express from "express";
+// import "dotenv/config";
+import path from 'node:path';
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+
+const PUBLIC_PORT = 8000; // process.env.PUBLIC_PORT
+const APP_PORT = 8001; //process.env.APP_PORT ??
 
 const app = express();
 
@@ -9,7 +13,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.listen(process.env.PORT, () => console.log(`Listen port ${process.env.PORT}`));
-app.listen(process.env.STATIC_PORT, () => console.log(`Listen port ${process.env.STATIC_PORT}`))
+app.listen(PUBLIC_PORT, () => console.log(`Listen port ${PUBLIC_PORT}`));
+app.listen(APP_PORT, () => console.log(`Listen port ${APP_PORT}`))
 
-app.get("/", (_, res) => res.send("Hello"))
+app.get("(/:id([1-2]{1}).html)|(/)", (req: Request, res: Response, next: NextFunction) => {
+    if (req.socket.localPort === PUBLIC_PORT) {
+        return res.sendFile(path.join(__dirname, "..", '/public/index.html'));
+    }
+
+    next()
+})
+
+app.get("/", (req: Request, res: Response) => {
+    if (req.socket.localPort === APP_PORT) {
+        return res.sendFile(path.join(__dirname, "..", '/public/index.js'));
+    }
+
+    res.sendStatus(404);
+})
