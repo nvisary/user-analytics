@@ -4,7 +4,10 @@
   "description": "Simple analytics app with saving and storing users interact data in mongodb",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon"
+    "start:dev": "nodemon",
+    "start": "npm run start:dev",
+    "build:server": "tsc",
+    "build:client": "tsc && rm -rf public/analytics && mv dist/analytics public"
   },
   "repository": {
     "type": "git",

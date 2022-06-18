@@ -26,7 +26,7 @@ app.get("(/:id([1-2]{1}).html)|(/)", (req: Request, res: Response, next: NextFun
 
 app.get("/", (req: Request, res: Response) => {
     if (req.socket.localPort === APP_PORT) {
-        return res.sendFile(path.join(__dirname, "..", '/public/index.js'));
+        return res.sendFile(path.join(__dirname, "..", '/public/analytics/tracker.js'));
     }
 
     res.sendStatus(404);
