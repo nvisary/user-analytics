@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <button onclick="tracker.track('click-button'); console.log(tracker.buffer);">Click me</button>
+    <button onclick="tracker.track('click-button')">Click me</button>
     <ul>
         <li>
             <a href="/" onclick="tracker.track('click-link', 'root')">Root</a>
@@ -20,6 +20,9 @@
         </li>
         <li>
             <a href="/2.html" onclick="tracker.track('click-link', '2')">2.html</a>
+        </li>
+        <li>
+            <a href="https://google.com">Go to Google</a>
         </li>
     </ul>
 </body>
